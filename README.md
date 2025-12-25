@@ -39,15 +39,15 @@ The project follows a complete Machine Learning lifecycle:
 ### Option A: Run with Docker (Recommended)
 This guarantees all dependencies (including specific library versions) match exactly.
 
-├── Dockerfile             # Blueprint for the container (Python 3.11)
-├── requirements.txt       # Dependencies (Pinned for reproducibility)
-├── train.py               # Training script (Generates model.bin)
-├── predict.py             # Flask deployment script (Web Service)
-├── test.py                # Client script to test the deployed model
-├── scraping.ipynb         # Data extraction logic (ScraperFC/soccerdata)
-├── final_dataset.csv      # The clean dataset used for training
-├── model.bin              # The trained XGBoost model + DictVectorizer
-└── README.md              # Project documentation
+├── Dockerfile             # Blueprint for the container (Python 3.11) 
+├── requirements.txt       # Dependencies (Pinned for reproducibility) 
+├── train.py               # Training script (Generates model.bin) 
+├── predict.py             # Flask deployment script (Web Service) 
+├── test.py                # Client script to test the deployed model 
+├── scraping.ipynb         # Data extraction logic (ScraperFC/soccerdata) 
+├── final_dataset.csv      # The clean dataset used for training 
+├── model.bin              # The trained XGBoost model + DictVectorizer 
+└── README.md              # Project documentation 
 
 **1. Build the Docker Image**
 ```bash
