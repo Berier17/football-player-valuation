@@ -12,14 +12,24 @@ This service provides a "predicted market value" (in Euros) for any given player
 
 ## 2. Exploratory Data Analysis (EDA)
 
-My analysis (in `notebook.ipynb`) was performed to find the key statistical drivers of market value. I utilized a **Correlation Matrix** and **Scatter Plots** to visualize relationships between on-field performance and financial value.
+My analysis (in `notebook.ipynb`) was performed to find the key drivers of market value. I used **Mutual Information (MI)** scores to analyze categorical data and a **Correlation Matrix** for numerical data.
 
-The analysis revealed that performance metrics are the strongest predictors, but age plays a crucial negative role:
+**1. Categorical Feature Importance (Mutual Information):**
+The team a player plays for is by far the strongest categorical predictor.
+
+| Feature | MI Score | Insight |
+| :--- | :--- | :--- |
+| **team** | **0.191** | High importance. The "Club Premium" exists (e.g., Man City players cost more). |
+| **pos** | **0.043** | Low importance. Position alone doesn't dictate price much. |
+| **nation** | **0.024** | Negligible. Nationality has almost no impact on value. |
+
+**2. Numerical Correlations:**
+For player stats, performance metrics dominate:
 
 | Feature | Correlation (r) | Insight |
 | :--- | :--- | :--- |
 | **npxG+xAG** | **0.54** | Strongest correlation. Goal contributions drive value. |
-| **Starts** | **0.47** | Playing time is a critical baseline for value. |
+| **Starts** | **0.35** | Playing time is a consistent baseline for value. |
 | **Age** | **-0.27** | Negative correlation. Older players lose value even with good stats. |
 
 **Key Insights:**
@@ -34,8 +44,8 @@ I trained and evaluated **Linear Regression** and **XGBoost** models. While Line
 * **MAE (Cash Error):** XGBoost is off by an average of **€948k** per player, whereas Linear Regression is off by **€1.13M**. Over a transfer window of 10 players, XGBoost saves the club nearly **€1.8M** in estimation error.
 * **MAPE (Percentage Error):** Linear Regression struggled with lower-value players (68% error). XGBoost (54.9%) was far more robust across the entire squad.
 
-**Feature Importance:**
-The XGBoost model prioritized the **Team** feature above all else, indicating that the "club premium" (e.g., playing for a top-tier team) adds significant intangible value, followed closely by Age and Expected Goals.
+**Feature Importance (Model View):**
+The XGBoost model prioritized the **Team** feature above all else, confirming the Mutual Information finding that the "club premium" is the biggest driver of price.
 
 | Feature | Importance Score |
 | :--- | :--- |
@@ -103,11 +113,13 @@ player = {
     "team": "Arsenal", 
     "pos": "Forward"
 }
+
+response = requests.post(url, json=player)
+print(response.json())
+
 #Answer
 {
   "message": "Estimated Value: €10,522,622",
   "predicted_value_euros": 10522622.0
 }
 
-response = requests.post(url, json=player)
-print(response.json())
