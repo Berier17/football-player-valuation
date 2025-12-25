@@ -1,0 +1,9 @@
+pandas
+numpy
+scikit-learn==1.8.0
+xgboost==3.1.1
+flask
+gunicorn
+# Dev Dependencies (for scraping)
+ScraperFC
+soccerdata
